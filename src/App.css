@@ -1,0 +1,145 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito", sans-serif;
+}
+
+.App{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito", sans-serif;
+  background-color: #414a7b;
+  color: #414a7b;
+}
+
+.button {
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 15px 0;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 10px;
+  letter-spacing: 1px;
+  background: #2ce2ea;
+  cursor: pointer;
+  margin-top: 40px;
+}
+
+.login {
+  width: 100%;
+  min-height: 100vh;
+  padding: 0 20px;
+  background: #414a7b;
+  display: flex;
+}
+
+.login .loginContainer {
+  padding: 30px;
+  padding-left: 255px;
+  padding-right: 255px;
+  margin: auto;
+  width: 100%;
+  max-width: 820px;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
+  background: radial-gradient(
+    ellipse at left bottom,
+    #414a7b 0%,
+    #414a7b 59%,
+    #414a7b 100%
+  );
+  box-shadow: 5px 20px 20px 1px rgba(0, 0, 0, 0.8);
+}
+
+
+.login .loginContainer label {
+  color: white;
+  margin: 14px 0;
+  display: block;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.login .loginContainer input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 19px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.login .loginContainer .btnContainer {
+  width: 100%;
+  padding: 24px 0;
+  text-align: center;
+}
+
+.login .loginContainer .btnContainer p {
+  margin: 14px 0 0 0;
+  text-align: right;
+  color: #fff;
+}
+
+.login .loginContainer .btnContainer p span {
+  color: yellow;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-left: 5px;
+  cursor: pointer;
+  transition: all 400ms ease-in-out;
+}
+
+.login .loginContainer .btnContainer p span:hover {
+  color: red;
+}
+
+.login .loginContainer .errorMsg {
+  color: red;
+  font-size: 16px;
+}
+
+.termos {
+  color: rgb(184, 184, 184);
+  font-size: 10px;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.hero {
+  width: 100%;
+  min-height: 100vh;
+  background: radial-gradient(
+    ellipse at left bottom,
+    #D51556 0%,
+    #D51556 59%,
+    #D51556 100%
+  );
+}
+
+.hero nav {
+  background: #2ce2ea;
+  width: 100%;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero nav h2 {
+  color: #fff;
+}
+
+.hero nav button {
+  width: 86px;
+  padding: 8px 0;
+  background: #2ce2ea;
+}
