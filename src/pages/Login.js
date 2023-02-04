@@ -1,20 +1,58 @@
 import React, { useContext, useState } from "react";
-import logo from "../images/smartphone.png";
+import logo from "../images/logoteste2.png";
 import api from "../Api";
 import { repositoryUser } from "../Repositories/user";
-import { Typography } from "@material-ui/core";
+import { Backdrop, CircularProgress, Typography, useMediaQuery } from "@material-ui/core";
 import AuthApi from "../Routes/AuthApi";
 import { Navigate, Outlet } from "react-router-dom";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Cookies from "js-cookie";
+import SnackbarsMessage from "../components/SnackbarMessage";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+  },
+  appBarSpacer: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    height: "100vh",
+    overflow: "auto",
+  },
+  container: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+  },
+  paper: {
+    padding: theme.spacing(2),
+    display: "flex",
+    overflow: "auto",
+    flexDirection: "column",
+  },
+  fixedHeight: {
+    height: 240,
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
+}));
 
 export const Login = (props) => {
+  const classes = useStyles();
   const Auth = useContext(AuthApi);
+  const [loading, setLoading] = useState(false);
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [hasAccount, setHasaccount] = useState(false);
+  const [message, setMessage] = useState("");
+  const [SnackbarOpen, setSnackbarOpen] = useState();
+  const [severity, setSeverity] = useState();
   const [name, setName] = useState("");
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const login = async () => {
     let userAdmin = {
@@ -22,36 +60,49 @@ export const Login = (props) => {
       password: password,
     };
     try {
-    //   const response = await repositoryUser.post(userAdmin);
-    //   if (response) {
+      setLoading(true)
+      const response = await repositoryUser.post(userAdmin);
+      if (response) {
         Auth.setAuth(true);
         Cookies.set("user", "loginTrue");
-    //   }
+      }
+      setMessage("Bem vindo De volta!");
+      setSeverity("success");
+      setSnackbarOpen(true);
     } catch (error) {
+      setMessage("Senha ou usuarios incorretos!");
+      setSeverity("error");
+      setSnackbarOpen(true);
+    }finally{
+      setLoading(false)
     }
   };
 
   return (
     <>
-      <section className="login">
-        <div className="loginContainer">
+    <Backdrop className={classes.backdrop} open={loading}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+        <SnackbarsMessage
+          {...{ message, SnackbarOpen, setSnackbarOpen, severity }}
+        />
+      <section className="login" style={{position: "absolute"}}>
+        
+        <div className={fullScreen ? "loginContainerMobile" : "loginContainer"}>
           <div
             style={{
-              width: "100%",
               textAlign: "center",
-              marginBottom: "30px",
             }}
           >
-            <img src={logo} width="80px" style={{ float: "center" }}></img>
+            <img src={logo} width="200px" style={{ float: "center" }}></img>
           </div>
           <div
             style={{
-              width: "100%",
               textAlign: "center",
               marginBottom: "10px",
             }}
           >
-            <Typography style={{ color: "white", marginBottom: "10px" }}>
+            <Typography style={{ color: "white" }}>
               Bem Vindo de volta!
             </Typography>
           </div>

@@ -57,8 +57,23 @@
   box-shadow: 5px 20px 20px 1px rgba(0, 0, 0, 0.8);
 }
 
+.login .loginContainerMobile {
+  padding: 30px;
+  margin: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
+  background: radial-gradient(
+    ellipse at left bottom,
+    #414a7b 0%,
+    #414a7b 59%,
+    #414a7b 100%
+  );
+}
 
-.login .loginContainer label {
+.login label {
   color: white;
   margin: 14px 0;
   display: block;
@@ -66,7 +81,7 @@
   line-height: 1;
 }
 
-.login .loginContainer input {
+.login input {
   width: 100%;
   border: none;
   outline: none;
@@ -77,19 +92,19 @@
   letter-spacing: 1px;
 }
 
-.login .loginContainer .btnContainer {
+.login .btnContainer {
   width: 100%;
   padding: 24px 0;
   text-align: center;
 }
 
-.login .loginContainer .btnContainer p {
+.login .btnContainer p {
   margin: 14px 0 0 0;
   text-align: right;
   color: #fff;
 }
 
-.login .loginContainer .btnContainer p span {
+.login .btnContainer p span {
   color: yellow;
   font-weight: 500;
   letter-spacing: 0.5px;
@@ -98,11 +113,11 @@
   transition: all 400ms ease-in-out;
 }
 
-.login .loginContainer .btnContainer p span:hover {
+.login .btnContainer p span:hover {
   color: red;
 }
 
-.login .loginContainer .errorMsg {
+.login .errorMsg {
   color: red;
   font-size: 16px;
 }

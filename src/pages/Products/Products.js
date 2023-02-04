@@ -42,6 +42,10 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
 }));
 
 export default function Products() {
@@ -84,6 +88,7 @@ export default function Products() {
 
   const handleClickSave = async () => {
     try {
+      setLoading(true);
       let list = {
         name: name,
         category: categoryProducts,
@@ -92,13 +97,15 @@ export default function Products() {
         quantity: quantity,
       };
       await ProductRepository.post(list);
-      setLoading(true);
       GetProducts();
       setOpenModal(false);
       setMessage("Produto cadastrado com sucesso!");
       setSeverity("success");
       setSnackbarOpen(true);
     } catch (error) {
+      setMessage("Ocorreu um erro no sistema!");
+      setSeverity("error");
+      setSnackbarOpen(true);
     } finally {
       setLoading(false);
     }
@@ -106,10 +113,13 @@ export default function Products() {
 
   const handleDelete = async () => {
     try {
-      await ProductRepository.delete(id);
       setLoading(true);
+      await ProductRepository.delete(id);
       GetProducts();
     } catch (error) {
+      setMessage("Ocorreu um erro no sistema!");
+      setSeverity("error");
+      setSnackbarOpen(true);
     } finally {
       setOpenDelete(false);
       setLoading(false);
@@ -144,6 +154,7 @@ export default function Products() {
 
   const handleClickSaveEdit = async () => {
     try {
+      setLoading(true);
       let list = {
         id: id,
         name: name,
@@ -153,13 +164,15 @@ export default function Products() {
         quantity: quantity,
       };
       await ProductRepository.put(list);
-      setLoading(true);
       GetProducts();
       setOpenEdit(false);
       setMessage("Produto editado com sucesso!");
       setSeverity("success");
       setSnackbarOpen(true);
     } catch (error) {
+      setMessage("Ocorreu um erro no sistema!");
+      setSeverity("error");
+      setSnackbarOpen(true);
     } finally {
       setLoading(false);
       setPriceEdit("");
@@ -174,14 +187,25 @@ export default function Products() {
       } else {
         GetProducts();
       }
-    } catch (error) {}
+    } catch (error) {
+      setMessage("Ocorreu um erro no sistema!");
+      setSeverity("error");
+      setSnackbarOpen(true);
+    }
   };
 
   const GetProducts = async () => {
     try {
+      setLoading(true)
       const response = await ProductRepository.getAll();
       setAllProducts(response.data.data);
-    } catch (error) {}
+    } catch (error) {
+      setMessage("Ocorreu um erro no sistema!");
+      setSeverity("error");
+      setSnackbarOpen(true);
+    }finally{
+      setLoading(false)
+    }
   };
 
   const handleBuyProduct = async (id, name, quantity, price) => {
@@ -194,6 +218,7 @@ export default function Products() {
 
   const handleClickSaveBuy = async (price, quantity) => {
     try {
+      setLoading(true);
       let list = {
         idproduct: id,
         product: name,
@@ -203,7 +228,6 @@ export default function Products() {
         data: new Date(),
       };
       await SellingRepository.post(list);
-      setLoading(true);
       GetProducts();
       setOpenEdit(false);
       setMessage("Venda realizada com sucesso!");
@@ -221,16 +245,17 @@ export default function Products() {
 
   return (
     <div className={classes.root}>
+      
       <MenuDrawer />
+      <Backdrop className={classes.backdrop} open={loading}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
       <main className={classes.content}>
         <SnackbarsMessage
           {...{ message, SnackbarOpen, setSnackbarOpen, severity }}
         />
-        <Backdrop className={classes.backdrop} open={loading}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
         <div className={classes.appBarSpacer} />
-        <ModalAddProducts
+      <ModalAddProducts
           {...{
             openModal,
             setOpenModal,

@@ -80,8 +80,6 @@ export default function Orders(props) {
       setItems(v.sort(function (a, b) {
         return b.id - a.id;
       }));
-      console.log("ITEMS",items);
-      
     }
   }
   

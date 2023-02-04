@@ -102,7 +102,7 @@ export default function ModalAddProducts(props) {
           <Grid container spacing={12}>
             <Grid
               item
-              xs={7}
+              xs={fullScreen? 12 : 7}
               style={{ paddingBottom: "10px", paddingRight: "10px" }}
             >
               <TextField
@@ -114,7 +114,7 @@ export default function ModalAddProducts(props) {
                 fullWidth={true}
               />
             </Grid>
-            <Grid item xs={5} style={{ paddingBottom: "10px" }}>
+            <Grid item xs={fullScreen? 12 : 5} style={{ paddingBottom: "10px" }}>
               <USelect
                 {...{
                   itens: categories,
@@ -124,13 +124,13 @@ export default function ModalAddProducts(props) {
                 }}
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={fullScreen? 6 :4}>
               <FormattedInputs {...{ valuePrice, handleChange }} />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={fullScreen? 6 :4}>
               <UploadButton {...{ upload }} />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={fullScreen? 12 :4}>
               <TextField
                 id="outlined-basic"
                 label="Quantidade"

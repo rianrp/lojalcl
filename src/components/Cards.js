@@ -78,8 +78,8 @@ export default function Cards(props) {
   return (
     <>
       {products?.map((item) => (
-        <Grid item xs={fullScreen ? 12 : 2} style={{marginRight: 80}}>
-          <Card className={classes.root} variant="outlined" key={item.id}>
+        <Grid item xs={fullScreen ? 12 : 2} style={{marginRight: 80}} key={item.id}>
+          <Card className={classes.root} variant="outlined" >
             <CardContent>
               <CardMedia
                 className={classes.media}

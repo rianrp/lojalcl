@@ -141,13 +141,11 @@ export default function PrimarySearchAppBar(props) {
         </IconButton>
         <p>Messages</p>
       </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <AddToPhotosIcon />
-          </Badge>
+      <MenuItem onClick={props.handleOpenCreate}>
+        <IconButton color="inherit" >
+          <AddToPhotosIcon />
         </IconButton>
-        <p>Messages</p>
+        <p>Adicionar produtos</p>
       </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
@@ -192,16 +190,15 @@ export default function PrimarySearchAppBar(props) {
               value={props.searchValue}
               onChange={(e) => props.setSearchValue(e.target.value)}
             />
-            
           </div>
           <Button
-              variant="contained"
-              color="primary"
-              className={classes.button}
-              onClick={props.handleSearch}
-            >
-              <SearchIcon></SearchIcon>
-            </Button>
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            onClick={props.handleSearch}
+          >
+            <SearchIcon></SearchIcon>
+          </Button>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton color="inherit" onClick={props.handleOpenCreate}>
@@ -223,7 +220,7 @@ export default function PrimarySearchAppBar(props) {
               aria-label="show more"
               aria-controls={mobileMenuId}
               aria-haspopup="true"
-              onClick={props.handleOpenCreate}
+              onClick={handleMobileMenuOpen}
               color="inherit"
             >
               <MoreIcon />

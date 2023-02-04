@@ -5,9 +5,9 @@ import AuthApi from "./AuthApi";
 import Cookies from "js-cookie";
 
 export const ProtectRoutes = ({ children }) => {
-  const { auth } = useContext(AuthApi);
   if (!Cookies.get("user")) {
-    return <Navigate to="/login" />;
+    console.log("RENDERIZOU AQUI")
+    return <Navigate to="/" />;
   }
   return <>{children}</>;
 };

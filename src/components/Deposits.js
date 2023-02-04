@@ -3,7 +3,8 @@ import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Title from "./Title";
-import { ListItem } from "@material-ui/core";
+import { Button, ListItem } from "@material-ui/core";
+import ExportExcel from "./uexcelexport";
 
 function preventDefault(event) {
   event.preventDefault();
@@ -19,7 +20,16 @@ export default function Deposits(props) {
   const classes = useStyles();
   const [deposits, setDeposits] = useState(0);
   const [value, setValue] = useState(props.sallers);
-  const [date, setDate] = useState(new Date().getFullYear() + '/' + new Date().getMonth() + 1 + '/' + new Date().getDate());
+  const [colunasExcel, setColunasExcel] = useState();
+  const [rowsExcel, setRowsExcel] = useState();
+  const [date, setDate] = useState(
+    new Date().getFullYear() +
+      "/" +
+      new Date().getMonth() +
+      1 +
+      "/" +
+      new Date().getDate()
+  );
   let deposit = 0;
 
   const DepositSaller = () => {
@@ -27,13 +37,16 @@ export default function Deposits(props) {
 
     if (value) {
       props.sallers.forEach((item) => (deposit += item.total));
-      console.log("SALLER");
     } else {
       setDeposits(0);
     }
 
     setDeposits(deposit);
   };
+
+  useEffect(() => {
+    setValue(props.sallers)
+  }, [props.sallers])
 
   return (
     <React.Fragment>
@@ -46,9 +59,7 @@ export default function Deposits(props) {
         {date}
       </Typography>
       <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          Ver excel
-        </Link>
+        <ExportExcel {...{value}} />
       </div>
     </React.Fragment>
   );

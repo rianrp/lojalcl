@@ -1,6 +1,6 @@
 import api from "../Api"
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InJpYW5qcyIsInJvbGUiOiJVc2VyIiwibmJmIjoxNjczNjMwNDMwLCJleHAiOjE2NzQyMzUyMzAsImlhdCI6MTY3MzYzMDQzMH0.rsnxJ7R3r76zUR4yC2pC3fNpo8DV-x9LQYlZHRbORWA"
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InJpYW5qcyIsInJvbGUiOiJVc2VyIiwibmJmIjoxNjc0OTYwNDk5LCJleHAiOjE2NzU1NjUyOTksImlhdCI6MTY3NDk2MDQ5OX0.Mxhhu9PQqEn3F_G55XZS22ykslhjq-2RSl-rodlIEJc"
 export const ProductRepository = {
     getAll: async () => {
         let loginUserAdmin = await api.get('/Product/get-all', {

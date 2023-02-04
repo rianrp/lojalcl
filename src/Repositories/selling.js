@@ -1,6 +1,6 @@
 import api from "../Api"
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InJpYW5qcyIsInJvbGUiOiJVc2VyIiwibmJmIjoxNjczNjMwNDMwLCJleHAiOjE2NzQyMzUyMzAsImlhdCI6MTY3MzYzMDQzMH0.rsnxJ7R3r76zUR4yC2pC3fNpo8DV-x9LQYlZHRbORWA"
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InJpYW5qcyIsInJvbGUiOiJVc2VyIiwibmJmIjoxNjc0OTY4NTk0LCJleHAiOjE2NzU1NzMzOTQsImlhdCI6MTY3NDk2ODU5NH0.K9J-fZ_APMwEyjs_rbD5hKF6YVCFBxNiUJWRgKnkShw"
 
 export const SellingRepository = {
     getAll: async () => {
