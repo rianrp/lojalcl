@@ -1,20 +1,22 @@
 import api from "../Api"
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InJpYW5qcyIsInJvbGUiOiJVc2VyIiwibmJmIjoxNjc0OTYwNDk5LCJleHAiOjE2NzU1NjUyOTksImlhdCI6MTY3NDk2MDQ5OX0.Mxhhu9PQqEn3F_G55XZS22ykslhjq-2RSl-rodlIEJc"
+const user = JSON.parse(localStorage.getItem("usuario"));
+const teste = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InJpYW5qcyIsInJvbGUiOiJVc2VyIiwibmJmIjoxNjc4MTQ0ODE5LCJleHAiOjE2Nzg3NDk2MTksImlhdCI6MTY3ODE0NDgxOX0.kjw1prn2FnlXrkGAh5IHF6qMcRJwoLgZlo9sx5_x8j0"
+
 export const ProductRepository = {
     getAll: async () => {
         let loginUserAdmin = await api.get('/Product/get-all', {
             headers: {
-                Authorization: "Bearer " + token
+                Authorization: "Bearer " + user.token
             }
         });
         
         return loginUserAdmin;
-    }, 
+    },
     post: async (product) => {
         let response = await api.post('/Product/create', product, {
             headers: {
-                Authorization: "Bearer " + token
+                Authorization: "Bearer " + user.token
             }
         })
 
@@ -23,7 +25,7 @@ export const ProductRepository = {
     delete: async (id) => {
         let response = await api.delete('/Product/remove/' + id, {
             headers: {
-                Authorization: "Bearer " + token
+                Authorization: "Bearer " + user.token
             }
         })
 
@@ -32,7 +34,7 @@ export const ProductRepository = {
     put: async (product) => {
         let response = await api.put('/Product/update', product, {
             headers: {
-                Authorization: "Bearer " + token
+                Authorization: "Bearer " + user.token
             }
         })
 
@@ -41,7 +43,7 @@ export const ProductRepository = {
     getByName: async (productName) => {
         let loginUserAdmin = await api.get('/Product/get-by-name?name=' + productName, {
             headers: {
-                Authorization: "Bearer " + token
+                Authorization: "Bearer " + user.token
             }
         });
         

@@ -1,8 +1,5 @@
 * {
-  box-sizing: border-box;
   margin: 0;
-  padding: 0;
-  font-family: "Nunito", sans-serif;
 }
 
 .App{
@@ -10,8 +7,14 @@
   margin: 0;
   padding: 0;
   font-family: "Nunito", sans-serif;
-  background-color: #414a7b;
-  color: #414a7b;
+  background-color: #ffffff;
+}
+
+p{
+  overflow: hidden;
+  max-height: 100px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .button {
@@ -32,7 +35,7 @@
   width: 100%;
   min-height: 100vh;
   padding: 0 20px;
-  background: #414a7b;
+  background: #ffffff;
   display: flex;
 }
 
@@ -48,13 +51,27 @@
   flex-direction: column;
   justify-content: center;
   border-radius: 10px;
-  background: radial-gradient(
-    ellipse at left bottom,
-    #414a7b 0%,
-    #414a7b 59%,
-    #414a7b 100%
-  );
   box-shadow: 5px 20px 20px 1px rgba(0, 0, 0, 0.8);
+}
+
+.password-input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.password-input {
+  border: none;
+  border-bottom: 2px solid #000000;
+  font-size: 16px;
+  padding: 8px;
+  color: #000000;
+  font-family: Arial, sans-serif;
+}
+
+.password-input:focus {
+  outline: none;
+  border-bottom-color: #ffffff;
 }
 
 .login .loginContainerMobile {
@@ -67,14 +84,14 @@
   border-radius: 10px;
   background: radial-gradient(
     ellipse at left bottom,
-    #414a7b 0%,
-    #414a7b 59%,
-    #414a7b 100%
+    #ffffff 0%,
+    #ffffff 59%,
+    #ffffff 100%
   );
 }
 
 .login label {
-  color: white;
+  color: rgb(0, 0, 0);
   margin: 14px 0;
   display: block;
   font-size: 15px;
@@ -88,7 +105,7 @@
   font-size: 19px;
   padding: 10px;
   background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  color: #000000;
   letter-spacing: 1px;
 }
 

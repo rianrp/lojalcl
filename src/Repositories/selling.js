@@ -1,24 +1,43 @@
 import api from "../Api"
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InJpYW5qcyIsInJvbGUiOiJVc2VyIiwibmJmIjoxNjc0OTY4NTk0LCJleHAiOjE2NzU1NzMzOTQsImlhdCI6MTY3NDk2ODU5NH0.K9J-fZ_APMwEyjs_rbD5hKF6YVCFBxNiUJWRgKnkShw"
+const user = JSON.parse(localStorage.getItem("usuario"));
 
 export const SellingRepository = {
     getAll: async () => {
         let response = await api.get('/Vendas/get-all', {
             headers: {
-                Authorization: "Bearer " + token
+                Authorization: "Bearer " + user.token
             }
         });
         
         return response;
     }, 
-    post: async (selling) => {
-        let response = await api.post('/Vendas/create', selling, {
+    post: async (dto) => {
+        let response = await api.post('/Vendas/create', dto, {
             headers: {
-                Authorization: "Bearer " + token
+                Authorization: "Bearer " + user.token
             }
         })
 
         return response;
+    },
+    getDados: async () => {
+        let response = await api.get('/Vendas/dados', {
+            headers: {
+                Authorization: "Bearer " + user.token
+            }
+        });
+        
+        return response;
+    },
+    getDetails: async () => {
+        let response = await api.get('/Vendas/detalhes', {
+            headers: {
+                Authorization: "Bearer " + user.token
+            }
+        });
+        
+        return response;
     }
+
 }
