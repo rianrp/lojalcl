@@ -97,133 +97,20 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const GreenCheckbox = withStyles({
-    root: {
-        color: green[400],
-        '&$checked': {
-            color: green[600],
-        },
-    },
-    checked: {},
-})((props) => <Checkbox color="default" {...props} />);
-
 export const COnfigurations = () => {
     const classes = useStyles();
-    const [name, setName] = useState();
-    const [state, setState] = React.useState({
-        checkedA: true,
-        checkedB: true,
-        checkedF: true,
-        checkedG: true,
-    });
+    
     const user = JSON.parse(localStorage.getItem("usuario"));
-
-    const handleChange = (event) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
-    };
+    console.log("🚀 ~ file: index.jsx:114 ~ COnfigurations ~ user:", user)
 
     return (
         <div className={classes.root}>
             <MenuDrawer />
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
-                <Grid container item xs={12}>
-                    <Grid item xs={12} style={{ margin: "20px" }}>
-                        <Typography style={{ fontSize: "28px", fontWeight: "500" }}>Configurações</Typography>
-                    </Grid>
-                    <Grid container item xs={12} style={{ margin: "28px" }}>
-                        <Grid item xs={7}>
-                            <Grid item xs={12}>
-                                <Typography style={{ fontFamily: "sans-serif", fontSize: "20px" }}>Notificações</Typography>
-                                <hr style={{
-                                    border: 'none',
-                                    borderTop: '1px solid gray',
-                                    marginTop: "8px",
-                                    width: "80%"
-                                }} />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={state.checkedB}
-                                            onChange={handleChange}
-                                            name="checkedB"
-                                            color="primary"
-                                        />
-                                    }
-                                    label="Receber notificações"
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={state.checkedA}
-                                            onChange={handleChange}
-                                            name="checkedA"
-                                            color="primary"
-                                        />
-                                    }
-                                    label="Notificações via Email"
-                                />
-                            </Grid>
-                        </Grid>
-                        <Grid container item xs={4} style={{ textAlign: "center" }}>
-                            <Grid item xs={12} style={{ textAlign: "left" }}>
-                                <Typography style={{ fontFamily: "sans-serif", fontSize: "20px" }}>Perfil</Typography>
-                                <hr style={{
-                                    border: 'none',
-                                    borderTop: '1px solid gray',
-                                    marginTop: "8px",
-                                    width: "80%"
-                                }} />
-                            </Grid>
-                            <Grid item xs={12} style={{ marginTop: "15px" }}>
-                                <div style={{ position: "relative" }}>
-                                    <img src={user.usuario.image} style={{ width: "160px", height: "160px", borderRadius: "50%", }} />
-                                    <div style={{
-                                        position: "absolute",
-                                        top: "49%",
-                                        left: "50%",
-                                        transform: "translate(-50%, -50%)",
-                                        backgroundColor: "rgba(0, 0, 0, 0.5)",
-                                        color: "#555",
-                                        padding: "0px",
-                                        borderRadius: "50%",
-                                        width: "160px", height: "160px",
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        alignItems: "center",
-                                        cursor: "pointer"
-                                    }}>
-                                        <Typography style={{ margin: 0, color: "#888" }}>Alterar foto</Typography>
-                                    </div>
-                                </div>
-                            </Grid>
-                            <Grid item xs={12} style={{ margin: "10px" }}>
-                                <TextField
-                                    id="outlined-basic"
-                                    label="Nome"
-                                    value={user.usuario.name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    variant="outlined"
-                                    fullWidth={true}
-                                />
-                            </Grid>
-                            <Grid item xs={12} style={{ margin: "10px" }}>
-                                <TextField
-                                    id="outlined-basic"
-                                    label="Email"
-                                    value={user.usuario.email}
-                                    onChange={(e) => setName(e.target.value)}
-                                    variant="outlined"
-                                    fullWidth={true}
-                                />
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </Grid>
+                {/* faça o codigo aqui */}
+
+                {/* até aqui */}
             </main>
         </div>
     )

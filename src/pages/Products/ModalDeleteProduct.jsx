@@ -20,7 +20,7 @@ export default function ModalDeleteProduct(props) {
         <DialogTitle id="alert-dialog-title">{"Excluir"}</DialogTitle>
         <DialogContent> 
           <DialogContentText id="alert-dialog-description">
-            Você deseja realmente excluir esse produto?ssss
+            Você deseja realmente excluir esse produto?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
