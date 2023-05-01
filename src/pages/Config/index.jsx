@@ -1,7 +1,6 @@
 import { AppBar, Avatar, Checkbox, FormControlLabel, Grid, IconButton, TextField, Toolbar, Typography, alpha, makeStyles, withStyles } from "@material-ui/core"
 import React, { useState } from "react"
 import { MenuDrawer } from "../../components/ForMenu/Drawer"
-import FullWidthTabs from "./Config";
 import { green } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
@@ -108,9 +107,7 @@ export const COnfigurations = () => {
             <MenuDrawer />
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
-                {/* faça o codigo aqui */}
-
-                {/* até aqui */}
+                
             </main>
         </div>
     )
