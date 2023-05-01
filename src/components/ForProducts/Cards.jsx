@@ -14,7 +14,8 @@ import { Enums } from "../enums";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
+    width: 'auto',
+    margin: "10px"
   },
   bullet: {
     display: "inline-block",
@@ -85,7 +86,7 @@ export default function Cards(props) {
   return (
     <>
       {productsFiltrados?.map((item) => (
-        <Grid item xs={fullScreen ? 12 : 2} style={{ marginRight: 80 }} key={item.id}>
+        <Grid item xs={fullScreen ? 12 : 3} md={3} key={item.id}>
           <Card className={classes.root} variant="outlined" >
             <CardContent>
               <CardMedia

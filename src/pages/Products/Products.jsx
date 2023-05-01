@@ -423,21 +423,20 @@ export default function Products() {
             cartItem
           }}
         />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={1}>
-            {allProducts ? (
-              <Cards
-                {...{
-                  ProductsPerPage,
-                  handleOpenDelete,
-                  handleOpenEdit,
-                  handleBuyProduct,
-                  searchValue
-                }}
-              />
-            ) : null}
-          </Grid>
-        </Container>
+        <Grid container item xs={12} justify="left" alignItems="center">
+          {allProducts ? (
+            <Cards
+              {...{
+                ProductsPerPage,
+                handleOpenDelete,
+                handleOpenEdit,
+                handleBuyProduct,
+                searchValue
+              }}
+            />
+          ) : null}
+        </Grid>
+
         <Grid
           style={{
             textAlign: "center",
