@@ -122,10 +122,6 @@ export default function Dashboard() {
     }
   }
 
-  const handleInvest = () => {
-
-  }
-
   useEffect(() => {
     GetSallers();
   }, [])
@@ -159,11 +155,6 @@ export default function Dashboard() {
                     <LinearProgress />
                   )}
                 </Grid>
-                {/* {loading ? (
-                  <LinearProgress />
-                ) : (
-                  <Deposits {...{ sallers, setSallers }} />
-                )} */}
               </Paper>
             </Grid>
             <Grid item xs={6}>
@@ -178,11 +169,6 @@ export default function Dashboard() {
                     <LinearProgress />
                   )}
                 </Grid>
-                {/* {loading ? (
-                  <LinearProgress />
-                ) : (
-                  <Deposits {...{ sallers, setSallers }} />
-                )} */}
               </Paper>
             </Grid>
             <Grid item xs={6}>
@@ -197,11 +183,6 @@ export default function Dashboard() {
                     <LinearProgress />
                   )}
                 </Grid>
-                {/* {loading ? (
-                  <LinearProgress />
-                ) : (
-                  <Deposits {...{ sallers, setSallers }} />
-                )} */}
               </Paper>
             </Grid>
             {/* Recent Orders */}

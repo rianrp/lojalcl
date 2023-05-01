@@ -1,7 +1,7 @@
 import { AppBar, Avatar, Checkbox, FormControlLabel, Grid, IconButton, TextField, Toolbar, Typography, alpha, makeStyles, withStyles } from "@material-ui/core"
 import React, { useState } from "react"
 import { MenuDrawer } from "../../components/ForMenu/Drawer"
-import FullWidthTabs from "./Config";
+// import FullWidthTabs from "./Config";
 import { green } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
