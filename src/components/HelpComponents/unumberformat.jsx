@@ -48,19 +48,23 @@ export default function FormattedInputs(props) {
     props.setValue(e.target.value)
   }
 
+  console.log("dkkdkd", props.erros)
+
   return (
     <TextField
-      label={props.label+ (props.null?(" R$" + props.value):" ")}
+      label={props.label + (props.null ? (" R$" + props.value) : " ")}
       value={value}
       disabled={props.disable}
       onChange={(e) => handleChange(e)}
       name="numberformat"
       variant="outlined"
-      id="outlined-basic"
+      id={props.errors ? "outlined-basic" : "outlined-error-helper-text"}
       fullWidth={true}
       InputProps={{
         inputComponent: NumberFormatCustom,
       }}
+      error={props.errors}
+      helperText={props.errors ? "Não pode ser vazio." : ""}
     />
   );
 }

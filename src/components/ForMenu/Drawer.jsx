@@ -31,19 +31,6 @@ import { mainListItems, secondaryListItems } from "./listItems";
 import { useNavigate } from "react-router-dom";
 import SimpleMenu from "./profile";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © supernova"}
-      <Link color="inherit" href="https://mui.com/">
-        LCL Celulares
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -168,11 +155,6 @@ export const MenuDrawer = () => {
           >
             LCL Celulares
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
           <SimpleMenu {...{user}}/>
         </Toolbar>
       </AppBar>

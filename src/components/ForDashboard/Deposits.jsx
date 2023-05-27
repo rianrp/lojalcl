@@ -42,7 +42,6 @@ export default function Deposits(props) {
 
   useEffect(() => {
     setValue(props.sallers)
-    console.log(value)
   }, [props.sallers])
 
   return (

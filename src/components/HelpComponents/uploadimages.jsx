@@ -62,9 +62,7 @@ export default function UploadButton(props) {
         {props.image ? <Grid className={classes.imgGrid}><img src={props.image}></img></Grid> :
           <Grid className={classes.gridSelectImg}>
             <Grid>
-              <IconButton>
-                <AddPhotoAlternateIcon />
-              </IconButton>
+              <AddPhotoAlternateIcon />
               <Typography>{props.label}</Typography>
             </Grid>
           </Grid>

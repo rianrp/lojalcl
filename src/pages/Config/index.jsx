@@ -6,6 +6,7 @@ import { green } from "@material-ui/core/colors";
 const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
+        backgroundColor: "#505050"
     }, text: {
         padding: theme.spacing(2, 2, 0),
     },
@@ -100,7 +101,6 @@ export const COnfigurations = () => {
     const classes = useStyles();
     
     const user = JSON.parse(localStorage.getItem("usuario"));
-    console.log("🚀 ~ file: index.jsx:114 ~ COnfigurations ~ user:", user)
 
     return (
         <div className={classes.root}>

@@ -20,15 +20,12 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import { Enums } from "../../components/enums";
-import USelect from "../../components/uselect";
-import FormattedInputs from "../../components/HelpComponents/unumberformat";
-import UploadButton from "../../components/HelpComponents/uploadimages";
+import { Enums } from "../../../enums";
 import CloseIcon from "@material-ui/icons/Close";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
-import TextoLimitado from "../../components/HelpComponents/textoLimitado";
+import TextoLimitado from "../../../components/HelpComponents/textoLimitado";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -120,6 +117,20 @@ export default function ModalBuyProducts(props) {
     }
   }
 
+
+  const handleQuantityChange = (e) => {
+    const newQuantity = parseInt(e.target.value);
+    setQuantity(isNaN(newQuantity) ? 1 : newQuantity);
+  };
+
+  const decreaseQuantity = () => {
+    setQuantity(Math.max(quantity - 1, 1));
+  };
+
+  const increaseQuantity = () => {
+    setQuantity(quantity == props.quantity?quantity:quantity + 1);
+  };
+
   useEffect(() => {
     setValuePrice(props.priceBuy);
   }, [props.priceBuy]);
@@ -159,14 +170,14 @@ export default function ModalBuyProducts(props) {
               ></img>
             </Grid>
             <Grid style={{ marginTop: "20px" }}>
-              {props.quantity > 5?(
+              {props.quantity > 5 ? (
                 <Grid>
                   <Typography style={{ backgroundColor: "#40EB297A", borderRadius: "6px", paddingLeft: "8px", paddingRight: "8px", color: "#2D7418", fontFamily: "sans-serif", fontWeight: "bold" }}>ESTOQUE EM ALTA</Typography>
                 </Grid>
-              ):(
-              <Grid>
-                <Typography style={{ backgroundColor: "#EB29297A", borderRadius: "6px", paddingLeft: "8px", paddingRight: "8px", color: "#741818", fontFamily: "sans-serif", fontWeight: "bold" }}>ESTOQUE EM FALTA</Typography>
-              </Grid>
+              ) : (
+                <Grid>
+                  <Typography style={{ backgroundColor: "#EB29297A", borderRadius: "6px", paddingLeft: "8px", paddingRight: "8px", color: "#741818", fontFamily: "sans-serif", fontWeight: "bold" }}>ESTOQUE EM FALTA</Typography>
+                </Grid>
               )}
             </Grid>
             <Grid container item xs={12} style={{ textAlign: "left", marginTop: "20px" }}>
@@ -188,27 +199,17 @@ export default function ModalBuyProducts(props) {
               </Grid>
               <Grid item xs={7} style={{ textAlign: "right" }}>
                 <ButtonGroup style={{ height: "56px" }}>
-                  <Button
-                    aria-label="reduce"
-                    onClick={() => {
-                      setQuantity(Math.max(quantity - 1, 1));
-                    }}
-                  >
+                  <Button aria-label="reduce" onClick={decreaseQuantity}>
                     <RemoveIcon fontSize="small" />
                   </Button>
                   <TextField
                     id="outlined-basic"
-                    value={quantity<props.quantity?quantity:props.quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
+                    value={Math.min(quantity, props.quantity)}
+                    onChange={handleQuantityChange}
                     variant="outlined"
-                    style={{ width: "40px" }}
+                    style={{ width: '40px' }}
                   />
-                  <Button
-                    aria-label="increase"
-                    onClick={() => {
-                      setQuantity(quantity + 1);
-                    }}
-                  >
+                  <Button aria-label="increase" onClick={increaseQuantity}>
                     <AddIcon fontSize="small" />
                   </Button>
                 </ButtonGroup>
@@ -218,7 +219,7 @@ export default function ModalBuyProducts(props) {
                 <Typography style={{ fontSize: "1.125rem", fontWeight: "500", fontFamily: "sans-serif" }}>Descrição</Typography>
               </Grid>
               <Grid item xs={12} style={{ textAlign: "left", padding: "8px" }}>
-                <TextoLimitado texto={"Um produto Pode ser um bem físico, como um carro, um telefone celular ou um livro, ou um serviço, como uma aula de yoga, um corte de cabelo ou uma consulta médica."} limite={100} />
+                <TextoLimitado texto={props.description} limite={100} />
               </Grid>
             </Grid>
             <Grid item xs={12} style={{ marginTop: "20px", marginBottom: "20px" }}>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -14,17 +14,14 @@ import {
   FormControl,
   Grid,
   IconButton,
-  InputLabel,
-  MenuItem,
-  Select,
   TextField,
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import { Enums } from "../../components/enums";
-import USelect from "../../components/uselect";
-import FormattedInputs from "../../components/HelpComponents/unumberformat";
-import UploadButton from "../../components/HelpComponents/uploadimages";
+import { Enums } from "../../../../components/enums";
+import USelect from "../../../../components/uselect";
+import FormattedInputs from "../../../../components/HelpComponents/unumberformat";
+import UploadButton from "../../../../components/HelpComponents/uploadimages";
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import CloseIcon from "@material-ui/icons/Close";
@@ -36,9 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
-  }, selectEmpty: {
-    marginTop: theme.spacing(2),
-  }, formControl: {
+  },formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
   },
@@ -67,10 +62,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ModalAddProducts(props) {
+export default function ModalEditProducts(props) {
   const theme = useTheme();
-  const [valuePrice, setValuePrice] = useState();
-  const [valueInvest, setValueInvest] = useState();
+  const [image, setImage] = useState();
+  const [valuePrice, setValuePrice] = useState(props.priceEdit);
+  const [valueInvest, setValueInvest] = useState(props.margin);
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const categories = [
     {
@@ -116,25 +112,40 @@ export default function ModalAddProducts(props) {
       label: "2 Anos"
     },
   ]
+
   const classes = useStyles();
 
-  const handleChange = (event) => {
-    props.setPrice(event.target.value)
+  const upload = (arquivo) => {
+    const imagemUpload = arquivo.target.files;
+    if (imagemUpload.lenght <= 0) return;
+    const fileReader = new FileReader();
+    fileReader.onloadend = () => {
+      setImage(fileReader.result);
+      props.setImage(fileReader.result);
+    };
+    fileReader.readAsDataURL(imagemUpload[0]);
   };
-
-  const handleChange2 = (event) => {
-    props.setMargin(event.target.value)
-  }
 
   const handleClose = () => {
-    props.setOpenModal(false);
+    props.setOpenEdit(false);
+    setValuePrice("")
+    setValueInvest("")
+    props.setMarginEdit(valueInvest)
   };
 
+  useEffect(() => {
+    setValueInvest(props.marginEdit)
+  }, [props.marginEdit])
+
+  useEffect(() => {
+    setValuePrice(props.priceEdit)
+  }, [props.priceEdit])
+  
   return (
     <div>
       <Dialog
         fullScreen={fullScreen}
-        open={props.openModal}
+        open={props.openEdit}
         onClose={handleClose}
         fullWidth={"md"}
         maxWidth={"md"}
@@ -161,7 +172,7 @@ export default function ModalAddProducts(props) {
             <Grid
               item
               xs={fullScreen ? 12 : 6}
-              style={{ paddingBottom: "10px" }}
+              style={{ paddingBottom: "10px", paddingRight: "10px" }}
             >
               <Grid item xs={12}>
                 <Grid item xs={12}>
@@ -183,15 +194,15 @@ export default function ModalAddProducts(props) {
                   itens: categories,
                   value: props.categoryProducts,
                   setValue: props.setCategoryProducts,
-                  label: "Categoria ",
+                  label: "Categoria "
                 }}
               />
             </Grid>
             <Grid item xs={fullScreen ? 6 : 3}>
-              <FormattedInputs label={"R$ Preço"} value={props.price} setValue={props.setPrice} Null={true} />
+              <FormattedInputs label={"Preço"} value={props.priceEdit} setValue={props.setPriceEdit} null={true}/>
             </Grid>
             <Grid item xs={fullScreen ? 6 : 3} style={{ paddingLeft: "5px" }}>
-              <FormattedInputs label={"R$ Investido"} value={props.margin} setValue={props.setMargin} Null={true} />
+              <FormattedInputs label={"Investido"} value={props.marginEdit} setValue={props.setMarginEdit} null={true}/>
             </Grid>
             <Grid item xs={fullScreen ? 12 : 2} style={{ marginTop: "20px" }}>
               <USelect
@@ -235,8 +246,7 @@ export default function ModalAddProducts(props) {
                 </ButtonGroup>
               </Grid>
             </Grid>
-
-            <Grid container item xs={12} style={{ marginTop: "20px" }}>
+            <Grid container item xs={12} style={{ marginTop: "30px" }}>
               <Grid item xs={12} style={{ width: "auto", display: "flex" }}>
                 <TextField
                   id="outlined-multiline-static"
@@ -255,7 +265,9 @@ export default function ModalAddProducts(props) {
           <Button autoFocus onClick={handleClose} color="primary">
             Cancelar
           </Button>
-          <Button onClick={props.handleClickSave} disable={props.loading ? true : false}
+          <Button
+            onClick={props.handleClickSaveEdit}
+            disable={props.loading ? true : false}
             color="primary"
             autoFocus
             variant="contained"

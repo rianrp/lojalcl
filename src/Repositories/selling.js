@@ -1,6 +1,7 @@
 import api from "../Api"
 
 const user = JSON.parse(localStorage.getItem("usuario"));
+console.log()
 
 export const SellingRepository = {
     getAll: async () => {

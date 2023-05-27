@@ -23,7 +23,6 @@ import {
     Toolbar,
     Typography,
 } from "@material-ui/core";
-import { Enums } from "../../components/enums";
 import USelect from "../../components/uselect";
 import FormattedInputs from "../../components/HelpComponents/unumberformat";
 import Visibility from '@material-ui/icons/Visibility';
@@ -31,6 +30,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import UploadButton from "../../components/HelpComponents/uploadimages";
 import addfotouser from "../../images/adicionar-usuario.png"
 import CloseIcon from "@material-ui/icons/Close";
+import { Enums } from "../../enums";
 
 const useStyles = makeStyles((theme) => ({
     root: {

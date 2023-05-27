@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
-import Chart from '../../components/ForDashboard/Chart';
-import Deposits from '../../components/ForDashboard/Deposits';
-import Orders from '../../components/ForDashboard/Orders';
 import { SellingRepository } from '../../Repositories/selling';
 import { MenuDrawer } from '../../components/ForMenu/Drawer';
-import PaymentForm from '../../components/Cards';
-import { ProductRepository } from '../../Repositories/products';
-import { LinearProgress, Typography } from '@material-ui/core';
+import { LinearProgress, Typography, useMediaQuery } from '@material-ui/core';
+import ProductCard from './ProductCard';
+import SoldItem from './ProductList';
+import OrderList from './Pedidos';
 
 
 
@@ -21,6 +17,7 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    height: "100vh"
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -79,12 +76,15 @@ const useStyles = makeStyles((theme) => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    height: '100vh',
+    height: '100%',
     overflow: 'auto',
   },
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
   },
   paper: {
     padding: theme.spacing(2),
@@ -94,6 +94,87 @@ const useStyles = makeStyles((theme) => ({
   },
   fixedHeight: {
     height: 240,
+  }, card: {
+    position: 'relative',
+    width: 'auto',
+    maxWidth: 320,
+    height: 200,
+    backgroundColor: '#303030',
+    borderRadius: 10,
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+    padding: 20,
+    fontSize: 16,
+    color: '#fff',
+    '&:hover': {
+      transform: 'scale(1.05)',
+      boxShadow: '0 2px 7px rgba(0, 0, 0, 0.5)',
+    },
+  },
+  card__logo: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    width: 50,
+    height: 30,
+    backgroundImage: 'url(card-logo.png)',
+    backgroundSize: 'cover',
+  },
+  card__number: {
+    fontSize: 23,
+    marginBottom: 20,
+    '&:hover': {
+      opacity: 1,
+    },
+    opacity: 0.7,
+    transition: 'opacity 0.3s ease',
+  },
+  card__info: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    position: "absolute",
+    bottom: "0",
+    left: "0",
+    right: "0",
+    marginBottom: "20px",
+    boxSizing: "border-box",
+    paddingLeft: "10px",
+    paddingRight: "10px"
+  },
+  card__name: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    '&:hover': {
+      opacity: 1,
+    },
+    opacity: 0.7,
+    transition: 'opacity 0.3s ease',
+    alignSelf: 'flex-end', // adicionado
+  },
+  card__expiry: {
+    fontSize: 14,
+    fontStyle: 'italic',
+    '&:hover': {
+      opacity: 1,
+    },
+    opacity: 0.7,
+    transition: 'opacity 0.3s ease',
+    alignSelf: 'flex-end', // adicionado
+  },
+  card__balance: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 20,
+  },
+  footer: {
+    backgroundColor: theme.palette.primary.main,
+    color: '#fff',
+    padding: theme.spacing(4),
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: 0,
+    width: '100%',
   },
 }));
 
@@ -103,19 +184,17 @@ export default function Dashboard() {
   const [sallers, setSallers] = useState();
   const [relatorio, setRelatorios] = useState();
   const [loading, setLoading] = useState(false);
-
-
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   const GetSallers = async () => {
     try {
       setLoading(true)
       const response = await SellingRepository.getDados();
-      const response2 = await SellingRepository.getAll();
       const response3 = await SellingRepository.getDetails();
       setSallers(response3.data.data)
-      setRelatorios(response.data.data)
-      console.log(response3)
+      setRelatorios(response.data.data[0])
     } catch (error) {
     } finally {
       setLoading(false)
@@ -132,76 +211,37 @@ export default function Dashboard() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={1} lg={4}>
-              <Paper className={fixedHeightPaper}>
-                {loading ? (
-                  <LinearProgress />
-                ) : (
-                  <Deposits {...{ sallers, setSallers }} />
-                )}
-              </Paper>
+          <Grid container>
+            <Grid container item xs={fullScreen ? 12 : 4} >
+              <Grid item xs={12}>
+                <div className={classes.card}>
+                  <div className={classes.card__logo}>
+                    <img src="https://th.bing.com/th/id/R.18bf4ee0dd2e2d4ddc937cdd10a62b6b?rik=N5MGkpzgQ%2fkyDw&pid=ImgRaw&r=0" width={50}></img>
+                  </div>
+                  <div className={classes.card__number}>{"***** ***** 7374"}</div>
+                  <div className={classes.card__balance}>Saldo R${relatorio?.saldoliquido}</div>
+                  <div className={classes.card__info}>
+                    <div className={classes.card__name}>{"Cartão principal"}</div>
+                    <div className={classes.card__expiry}>{"12/21"}</div>
+                  </div>
+                </div>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <Paper style={{ padding: "20px", width: "auto" }}>
-                <Typography style={{ fontWeight: "bold", color: "#949494" }}>Investido</Typography>
-                <Grid>
-                  {relatorio ? (
-                    <Typography style={{ fontWeight: "bold", color: "#949494" }}>
-                      R$ {relatorio[3].toFixed(2)}
-                    </Typography>
-                  ) : (
-                    <LinearProgress />
-                  )}
-                </Grid>
-              </Paper>
+            <Grid item xs={fullScreen ? 12 : 4}>
+              <ProductCard {...{ relatorio }} />
             </Grid>
-            <Grid item xs={6}>
-              <Paper style={{ padding: "20px", width: "auto", backgroundColor: "#dbf4e3" }}>
-                <Typography style={{ fontWeight: "bold", color: "#44cb67" }}>Ganhos</Typography>
-                <Grid>
-                  {relatorio ? (
-                    <Typography style={{ fontWeight: "bold", color: "#44cb67" }}>
-                      R$ {relatorio[2].toFixed(2)}
-                    </Typography>
-                  ) : (
-                    <LinearProgress />
-                  )}
-                </Grid>
-              </Paper>
-            </Grid>
-            <Grid item xs={6}>
-              <Paper style={{ padding: "20px", width: "auto", backgroundColor: "#fcdce3" }}>
-                <Typography style={{ fontWeight: "bold", color: "#fc4467" }}>Perdas</Typography>
-                <Grid>
-                  {relatorio ? (
-                    <Typography style={{ fontWeight: "bold", color: "#fc4467" }}>
-                      R$ {relatorio[0].toFixed(2)}
-                    </Typography>
-                  ) : (
-                    <LinearProgress />
-                  )}
-                </Grid>
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                {loading ? (
-                  <LinearProgress />
-                ) : (
-                  <Orders {...{ sallers }} />
-                )}
-              </Paper>
-            </Grid>
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <Chart {...{ sallers }} />
-              </Paper>
+            <Grid item xs={fullScreen ? 12 : 4}>
+              <OrderList />
             </Grid>
           </Grid>
         </Container>
+        <Grid>
+          <div className={classes.footer}>
+            <Typography variant="body1" style={{ width: "auto" }}>
+              © 2023 LCLcelulares. Todos os direitos reservados.
+            </Typography>
+          </div>
+        </Grid>
       </main>
     </div>
   );

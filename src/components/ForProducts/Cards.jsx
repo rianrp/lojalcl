@@ -10,7 +10,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import { CardMedia, Grid, IconButton, useMediaQuery } from "@material-ui/core";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { useTheme } from "@material-ui/core/styles";
-import { Enums } from "../enums";
+import { Enums } from "../../enums";
 
 const useStyles = makeStyles({
   root: {
@@ -46,31 +46,53 @@ export default function Cards(props) {
 
   function category(category) {
     switch (category) {
-      case Enums.category.celular:
-        category = "Celular";
+      case Enums.category.pelicula:
+        category = "Película";
         break;
-      case Enums.category.notebook:
-        category = "Notebook";
+      case Enums.category.capinha:
+        category = "Capinha";
         break;
-      case Enums.category.monitor:
-        category = "Monitor";
+      case Enums.category.carregador:
+        category = "Carregador";
         break;
-      case Enums.category.fone:
-        category = "Fone";
+      case Enums.category.cabo:
+        category = "Cabo";
+        break;
+      case Enums.category.fonte:
+        category = "Fonte";
+        break;
+      case Enums.category.caixadesom:
+        category = "Caixa de som";
+        break;
+      case Enums.category.fonedeouvido:
+        category = "Fone de ouvido";
+        break;
+      case Enums.category.suporteparacelular:
+        category = "Suporte para celular";
+        break;
+      case Enums.category.mouse:
+        category = "Mouse";
         break;
       case Enums.category.teclado:
-        category = "teclado";
+        category = "Teclado";
+        break;
+      case Enums.category.relogio:
+        category = "Relógio";
+        break;
+      case Enums.category.adaptador:
+        category = "Adaptador";
         break;
       case Enums.category.outros:
-        category = "outros";
+        category = "Outros";
         break;
-
+  
       default:
         break;
     }
-
+  
     return category;
   }
+  
 
   useEffect(() => {
     setProducts(props.ProductsPerPage);
@@ -127,7 +149,8 @@ export default function Cards(props) {
                     item.price,
                     item.quantity,
                     item.warranty,
-                    item.margin
+                    item.margin,
+                    item.description
                   )
                 }
               >
@@ -154,7 +177,8 @@ export default function Cards(props) {
                     item.quantity,
                     item.price,
                     item.image,
-                    item.warranty
+                    item.warranty,
+                    item.description
                   )
                 }
               >

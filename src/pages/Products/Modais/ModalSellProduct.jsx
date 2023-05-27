@@ -13,9 +13,9 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import { Enums } from "../../components/enums";
-import USelect from "../../components/uselect";
-import FormattedInputs from "../../components/HelpComponents/unumberformat";
+import { Enums } from "../../../enums";
+import USelect from "../../../components/uselect";
+import FormattedInputs from "../../../components/HelpComponents/unumberformat";
 import CloseIcon from "@material-ui/icons/Close";
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 import DateFnsUtils from '@date-io/date-fns';
@@ -84,9 +84,6 @@ export default function ModalSellProducts(props) {
     }
   ];
 
-  const handleChange = () => {
-
-  }
   for (let i = 1; i < 12; i++) {
     const parcela = props.values.total / i;
     const label = `${i}x de R$${parcela.toFixed(2)}`;

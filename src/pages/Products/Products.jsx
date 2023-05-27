@@ -8,18 +8,16 @@ import Link from "@material-ui/core/Link";
 import { ProductRepository } from "../../Repositories/products";
 import Cards from "../../components/ForProducts/Cards";
 import PrimarySearchAppBar from "../../components/ForProducts/SearchByItems";
-import ModalAddProducts from "./ModalAddProduct";
-import ModalDeleteProduct from "./ModalDeleteProduct";
+import ModalAddProducts from "./Modais/ModalAddProduct";
+import ModalDeleteProduct from "./Modais/ModalDeleteProduct";
 import SnackbarsMessage from "../../components/AllPages/SnackbarMessage";
-import ModalEditProducts from "./ModalEditProduct";
+import ModalEditProducts from "./Modais/ModalEditProduct";
 import { Backdrop, CircularProgress, TablePagination } from "@material-ui/core";
-import ModalBuyProducts from "./ModalBuyProducts";
+import ModalBuyProducts from "./Modais/ModalBuyProducts";
 import { SellingRepository } from "../../Repositories/selling";
 import { MenuDrawer } from "../../components/ForMenu/Drawer";
-import PaginationRounded from "../../components/ForMenu/Pagination";
 import Pagination from "@material-ui/lab/Pagination";
-import ModalSellProducts from "./ModalSellProduct";
-import { Notification } from "../../components/Notification";
+import ModalSellProducts from "./Modais/ModalSellProduct";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,9 +43,17 @@ const useStyles = makeStyles((theme) => ({
     height: 240,
   },
   backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
-    color: "#fff",
-  },
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 9999,
+    color: "#fff", // cor de fundo desejada
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  }
 }));
 
 export default function Products() {
@@ -98,10 +104,12 @@ export default function Products() {
   const handleOpenCreate = async () => {
     setOpenModal(true);
     setName("");
-    setCategoryProducts(6);
+    setCategoryProducts(13);
     setImage("");
-    setPrice("0");
-    setQuantity(0);
+    setPrice(0);
+    setMargin(0);
+    setQuantity(1);
+    setDescription("");
   };
 
   const handleClickSave = async () => {
@@ -114,8 +122,10 @@ export default function Products() {
         image: image,
         quantity: quantity,
         warranty: warranty,
-        margin: Number(parseFloat(margin).toFixed(2))
+        margin: Number(parseFloat(margin).toFixed(2)),
+        description: description
       };
+
       await ProductRepository.post(list);
       GetProducts();
       setOpenModal(false);
@@ -168,7 +178,8 @@ export default function Products() {
     prices,
     quantity,
     warranty,
-    margin
+    margin,
+    description
   ) => {
     setId(id);
     setName(name);
@@ -179,6 +190,7 @@ export default function Products() {
     setOpenEdit(true);
     setMarginEdit(margin)
     setWarranty(warranty)
+    setDescription(description)
   };
 
   const handleClickSaveEdit = async () => {
@@ -192,7 +204,8 @@ export default function Products() {
         image: image,
         quantity: quantity,
         warranty: warranty,
-        margin: Number(parseFloat(marginEdit).toFixed(2))
+        margin: Number(parseFloat(marginEdit).toFixed(2)),
+        description: description
       };
       await ProductRepository.put(list);
       GetProducts();
@@ -239,7 +252,7 @@ export default function Products() {
     }
   };
 
-  const handleBuyProduct = async (id, name, quantity, price, img, warranty) => {
+  const handleBuyProduct = async (id, name, quantity, price, img, warranty, description) => {
     setOpenBuy(true);
     setName(name);
     setId(id);
@@ -247,6 +260,7 @@ export default function Products() {
     setPriceBuy(price);
     setImage(img);
     setWarranty(warranty);
+    setDescription(description)
   };
 
   const handleAddCar = async (item) => {
@@ -328,16 +342,31 @@ export default function Products() {
     setOpenCart(true)
   }
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+    scrollToTop();
+  };
+
+  const scrollToTop = () => {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop > 0) {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+  };
+
   useEffect(() => {
     GetProducts();
   }, []);
 
   return (
     <div className={classes.root}>
-      <MenuDrawer />
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
+      <MenuDrawer />
       <main className={classes.content}>
         <SnackbarsMessage
           {...{ message, SnackbarOpen, setSnackbarOpen, severity }}
@@ -363,6 +392,8 @@ export default function Products() {
             setMargin,
             handleClickSave,
             loading,
+            description,
+            setDescription
           }}
         />
         <ModalDeleteProduct
@@ -390,6 +421,8 @@ export default function Products() {
             setOpenEdit,
             handleClickSaveEdit,
             loading,
+            description,
+            setDescription
           }}
         />
         <ModalBuyProducts
@@ -402,6 +435,7 @@ export default function Products() {
             priceBuy,
             image,
             warranty,
+            description,
             setPriceBuy,
             setQuantity,
             handleAddCar,
@@ -449,7 +483,7 @@ export default function Products() {
           <Grid>
             <Pagination
               count={pages}
-              onChange={(e, page) => setPage(page)}
+              onChange={handleChangePage}
               shape="rounded"
             />
           </Grid>

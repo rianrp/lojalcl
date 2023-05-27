@@ -7,6 +7,7 @@ import {
   Switch,
   Route,
   Routes,
+  useNavigate,
 } from "react-router-dom";
 import AuthApi from "./Routes/AuthApi";
 import { ProtectRoutes, PublicRoute } from "./Routes";
@@ -18,21 +19,7 @@ import { COnfigurations } from "./pages/Config";
 function App() {
   const Auth = useContext(AuthApi);
   const [auth, setAuth] = useState(Auth);
-  const [page, setPage] = useState(["/Dashboard", "/Products"]);
-  var storedArray = localStorage.getItem("usuario");
-
-  const readCookie = () => {
-    if (storedArray == null) {
-      setAuth(false);
-    }else{
-      setAuth(true)
-    }
-  };
-
-  useEffect(() => {
-    readCookie();
-  }, [localStorage.getItem("usuario"), storedArray]);
-
+  
   return (
     <AuthApi.Provider value={{ auth, setAuth }}>
       <Router>

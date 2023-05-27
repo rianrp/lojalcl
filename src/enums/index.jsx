@@ -1,11 +1,18 @@
 export const Enums = {
     category: {
-        celular: 1,
-        notebook: 2,
-        fone: 3,
-        teclado: 4,
-        monitor: 5,
-        outros: 6
+        pelicula: 1,
+        capinha: 2,
+        carregador: 3,
+        cabo: 4,
+        fonte: 5,
+        caixadesom: 6,
+        fonedeouvido: 7,
+        suporteparacelular: 8,
+        mouse: 9,
+        teclado: 10,
+        relogio: 11,
+        adaptador: 12,
+        outros: 13
     },
     cargo: {
         Manager: 1, 

@@ -35,8 +35,16 @@ const useStyles = makeStyles((theme) => ({
         height: 240,
     },
     backdrop: {
-        zIndex: theme.zIndex.drawer + 1,
-        color: "#fff",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 9999,
+        color: "#fff", // cor de fundo desejada
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
     }, search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
@@ -121,7 +129,7 @@ export const Employees = () => {
     }
 
     const handleClickCreate = async () => {
-        if(password.length < 6){
+        if (password.length < 6) {
             setMessage("A senha deve conter no mínimo 6 caracteres!");
             setSeverity("error");
             setSnackbarOpen(true);
@@ -134,7 +142,7 @@ export const Employees = () => {
                 email: email,
                 password: password,
                 cargo: cargo,
-                image: image
+                image: image == null ? "https://ibb.co/0t73h6D" : image
             }
             await EmployeesRepository.post(data);
             clear()
@@ -176,7 +184,7 @@ export const Employees = () => {
                 />
                 <div className={classes.appBarSpacer} />
 
-                <ModalAddEmployees {...{ openModal, setOpenModal, name, setName, email, setEmail, password, setPassword, cargo, setCargo, image, setImage, handleClickCreate }} />
+                <ModalAddEmployees {...{ openModal, setOpenModal, name, setName, email, setEmail, password, setPassword, cargo, setCargo, image, setImage, handleClickCreate, loading }} />
                 {/* <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
                     Funcionários
                 </Typography> */}

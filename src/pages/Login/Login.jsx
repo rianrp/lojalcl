@@ -62,6 +62,14 @@ export const Login = (props) => {
   const navigate = useNavigate()
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const redirectUserToDashboard = () => {
+    const usuario = JSON.parse(localStorage.getItem('usuario'));
+    if (usuario) {
+      navigate('/Dashboard');
+    }
+  };
+
+
   const login = async () => {
     let userAdmin = {
       login: email,
@@ -73,8 +81,10 @@ export const Login = (props) => {
       if (response) {
         Auth.setAuth(true);
         localStorage.setItem('usuario', JSON.stringify(response.data.data));
+        if(localStorage.getItem("usuario")){
+          window.location.reload();
+        }
       }
-      navigate('/Dashboard')
       setMessage("Bem vindo De volta!");
       setSeverity("success");
       setSnackbarOpen(true);
@@ -82,14 +92,13 @@ export const Login = (props) => {
       setMessage("Senha ou usuarios incorretos!");
       setSeverity("error");
       setSnackbarOpen(true);
-    } finally {
+    } finally { 
       setLoading(false)
     }
   };
 
   return (
     <div style={{ backgroundColor: "#fefefe" }}>
-
       <Container>
         <Backdrop className={classes.backdrop} open={loading}>
           <CircularProgress color="inherit" />
@@ -108,8 +117,7 @@ export const Login = (props) => {
           <Typography component="h1" variant="h5">
             Bem vindo de volta!
           </Typography>
-          <Grid style={{ textAlign: "left" }}>
-
+          <Grid style={{ textAlign: "left", maxWidth: "360px" }}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -148,7 +156,7 @@ export const Login = (props) => {
               style={{ backgroundColor: "#142df5" }}
               onClick={login}
             >
-              Sign In
+              Entrar
             </Button>
           </Grid>
         </div>
