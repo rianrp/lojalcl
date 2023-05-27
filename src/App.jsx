@@ -15,6 +15,7 @@ import Products from "./pages/Products/Products";
 import { Employees } from "./pages/Employees";
 import { Profile } from "./pages/Profile";
 import { COnfigurations } from "./pages/Config";
+import { InventoryControl } from "./pages/ControleEstoque";
 
 function App() {
   const Auth = useContext(AuthApi);
@@ -37,6 +38,15 @@ function App() {
             element={
               <ProtectRoutes>
                 <Dashboard />
+              </ProtectRoutes>
+            }
+          >
+          </Route>
+          <Route
+            path="/Restoque"
+            element={
+              <ProtectRoutes>
+                <InventoryControl />
               </ProtectRoutes>
             }
           ></Route>
