@@ -102,7 +102,7 @@ export default function Cards(props) {
     if(props.searchValue == ""){
       return e.name
     }
-    return e.name.includes(props.searchValue);
+    return e.name.toLowerCase().includes(props.searchValue.toLowerCase());
   });
 
   return (

@@ -68,9 +68,7 @@ export default function Products() {
   const [severity, setSeverity] = useState();
   const [id, setId] = useState(0);
   const [searchValue, setSearchValue] = useState("");
-  const [allProducts, setAllProducts] = useState(
-    searchValue == "" ? "" : { searchValue }
-  );
+  const [allProducts, setAllProducts] = useState([]);
   const [categoryProducts, setCategoryProducts] = useState();
   const [image, setImage] = useState();
   const [name, setName] = useState("");
@@ -220,21 +218,6 @@ export default function Products() {
     } finally {
       setLoading(false);
       setPriceEdit("");
-    }
-  };
-
-  const handleSearch = async () => {
-    try {
-      if (searchValue) {
-        const response = await ProductRepository.getByName(searchValue);
-        setAllProducts(response.data.data);
-      } else {
-        GetProducts();
-      }
-    } catch (error) {
-      setMessage("Ocorreu um erro no sistema!");
-      setSeverity("error");
-      setSnackbarOpen(true);
     }
   };
 
@@ -452,7 +435,6 @@ export default function Products() {
             handleOpenCreate,
             searchValue,
             setSearchValue,
-            handleSearch,
             handleOpenCart,
             cartItem
           }}
