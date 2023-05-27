@@ -80,7 +80,7 @@ export default function ModalAddProducts(props) {
     { quantity: false },
     { description: false }
   )
-
+ 
   const categories = [
     {
       value: Enums.category.celular,

@@ -4,7 +4,7 @@ const prod = {
     }
 }; const dev = {
     url: {
-        API_URL: window.location.href.includes('localhost') ? 'https://managerapiloja.azurewebsites.net/api' : window.location.origin.replace(':3000', ':5000') + '/api'
+        API_URL: window.location.href.includes('localhost') ? 'https://managerapilojadesenvolvimento.azurewebsites.net/' : window.location.origin.replace(':3000', ':5000') + '/api'
     }
 };
 const config = process.env.NODE_ENV === 'development' ? dev : prod;
