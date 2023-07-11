@@ -29,6 +29,8 @@ import LayersIcon from "@material-ui/icons/Layers";
 import { useState } from "react";
 import { mainListItems, secondaryListItems } from "./listItems";
 import { useNavigate } from "react-router-dom";
+import InventoryIcon from '@material-ui/icons/Assessment';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import SimpleMenu from "./profile";
 
 const drawerWidth = 240;
@@ -190,7 +192,19 @@ export const MenuDrawer = () => {
             </ListItemIcon>
             <ListItemText primary="Funcionarios" />
           </ListItem>
-          <ListItem button>
+          <ListItem button onClick={() => navigate('/Restoque')}>
+            <ListItemIcon>
+              <ShoppingBasketIcon />
+            </ListItemIcon>
+            <ListItemText primary="Controle de Restoque" />
+          </ListItem>
+          <ListItem button onClick={() => navigate('/Relatórios')}>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            <ListItemText primary="Relatórios" />
+          </ListItem>
+          {/* <ListItem button>
             <ListItemIcon>
               <BarChartIcon />
             </ListItemIcon>
@@ -201,7 +215,7 @@ export const MenuDrawer = () => {
               <LayersIcon />
             </ListItemIcon>
             <ListItemText primary="Integrações" />
-          </ListItem>{" "}
+          </ListItem> */}
         </List>
       </Drawer>
     </>

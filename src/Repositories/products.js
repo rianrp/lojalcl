@@ -45,8 +45,14 @@ export const ProductRepository = {
                 Authorization: "Bearer " + user.token
             }
         });
-        
         return loginUserAdmin;
+    },
+    getAllRestoque: async () => {
+        let allProducts = await api.get('/Product/get-all-Restoque', {
+            headers: {
+                Authorization: "Bearer " + user.token
+            }
+        })
+        return allProducts
     }
-    
 }

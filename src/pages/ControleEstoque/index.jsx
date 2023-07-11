@@ -1,7 +1,11 @@
 import { alpha, Backdrop, Button, CircularProgress, Grid, IconButton, InputBase, makeStyles, Toolbar, Tooltip, Typography } from "@material-ui/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MenuDrawer } from "../../components/ForMenu/Drawer"
 import SnackbarsMessage from "../../components/AllPages/SnackbarMessage";
+import CardsRestoque from "../../components/ForProducts/CardsRestoque";
+import Pagination from "@material-ui/lab/Pagination/Pagination";
+import { ProductRepository } from "../../Repositories/products";
+import ModalRestoque from "./Modais/ModalRestoque";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -17,15 +21,6 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: theme.spacing(4),
         paddingBottom: theme.spacing(4),
     },
-    paper: {
-        padding: theme.spacing(2),
-        display: "flex",
-        overflow: "auto",
-        flexDirection: "column",
-    },
-    fixedHeight: {
-        height: 240,
-    },
     backdrop: {
         position: "fixed",
         top: 0,
@@ -37,48 +32,8 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-    }, search: {
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: alpha(theme.palette.common.white, 0.15),
-        '&:hover': {
-            backgroundColor: alpha(theme.palette.common.white, 0.25),
-        },
-        marginLeft: 0,
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(1),
-            width: 'auto',
-        },
-    },
-    searchIcon: {
-        padding: theme.spacing(0, 2),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    inputRoot: {
-        color: 'inherit',
-    },
-    inputInput: {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            width: '12ch',
-            '&:focus': {
-                width: '20ch',
-            },
-        },
-    },
+    }
 }));
-
-
 
 export const InventoryControl = () => {
     const classes = useStyles();
@@ -86,6 +41,96 @@ export const InventoryControl = () => {
     const [message, setMessage] = useState("");
     const [SnackbarOpen, setSnackbarOpen] = useState();
     const [severity, setSeverity] = useState();
+    const [allProducts, setAllProducts] = useState([]);
+    const [openRestoque, setOpenRestoque] = useState(false);
+    const [restoqueSelected, setRestoqueSelected] = useState([])
+    const [quantity, setQuantity] = useState(0)
+    const [price, setPrice] = useState(0)
+    const [margin, setMargin] = useState(0)
+    const [itensperpage, setItensperpage] = useState(12);
+    const [page, setPage] = useState(1);
+    const pages = Math.ceil(allProducts.length / itensperpage);
+    const s = (page - 1) * itensperpage;
+    const i = s + itensperpage;
+    const ProductsPerPage = allProducts.slice(s, i);
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleSelectedRestoque = (id,
+        name,
+        category,
+        image,
+        prices,
+        quantity,
+        warranty,
+        margin,
+        description
+    ) => {
+        setRestoqueSelected({
+            id: id,
+            name: name,
+            category: category,
+            image: image,
+            prices: prices,
+            quantity: quantity,
+            warranty: warranty,
+            margin: margin,
+            description: description
+        })
+        setQuantity(quantity)
+        setPrice(prices)
+        setMargin(margin)
+        setOpenRestoque(true)
+    }
+
+    const handleClickSaveRestoque = async () => {
+        try {
+            setLoading(true);
+            let list = {
+                id: restoqueSelected.id,
+                name: restoqueSelected.name,
+                category: restoqueSelected.category,
+                price: Number(parseFloat(price).toFixed(2)),
+                image: restoqueSelected.image,
+                quantity: quantity,
+                warranty: restoqueSelected.warranty,
+                margin: Number(parseFloat(margin).toFixed(2)),
+                description: restoqueSelected.description
+            };
+            await ProductRepository.put(list);
+            getAllProductsRestoque()
+            setOpenRestoque(false);
+            setMessage("O produto foi restocado com sucesso no sistema");
+            setSeverity("success");
+            setSnackbarOpen(true);
+        } catch (error) {
+            setMessage("Ocorreu um erro no sistema!");
+            setSeverity("error");
+            setSnackbarOpen(true);
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const getAllProductsRestoque = async () => {
+        try {
+            setLoading(true);
+            const response = await ProductRepository.getAllRestoque();
+            setAllProducts(response.data.data.sort((a, b) => a.quantity - b.quantity));
+        } catch (error) {
+            setMessage("Ocorreu um erro no sistema!");
+            setSeverity("error");
+            setSnackbarOpen(true);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        getAllProductsRestoque();
+    }, [])
 
     return (
         <div className={classes.root}>
@@ -98,7 +143,36 @@ export const InventoryControl = () => {
                     {...{ message, SnackbarOpen, setSnackbarOpen, severity }}
                 />
                 <div className={classes.appBarSpacer} />
-                <h1>RESTOQUE</h1>
+                <ModalRestoque {...{ setOpenRestoque, openRestoque, restoqueSelected, quantity, margin, price, setQuantity, setPrice, setMargin, handleClickSaveRestoque, loading }} />
+                <Grid container item xs={12} justify="left" alignItems="center">
+                    {allProducts ? (
+                        <CardsRestoque
+                            {...{
+                                ProductsPerPage,
+                                setOpenRestoque,
+                                openRestoque,
+                                handleSelectedRestoque
+                            }}
+                        />
+                    ) : null}
+                </Grid>
+                <Grid
+                    style={{
+                        textAlign: "center",
+                        alignItems: "center",
+                        float: "center",
+                        display: "flex",
+                        justifyContent: "center",
+                    }}
+                >
+                    <Grid>
+                        <Pagination
+                            count={pages}
+                            onChange={handleChangePage}
+                            shape="rounded"
+                        />
+                    </Grid>
+                </Grid>
             </main>
         </div>
     )

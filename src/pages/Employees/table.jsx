@@ -3,7 +3,6 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Avatar, Typography } from '@material-ui/core';
 import addfotouser from "../../images/adicionar-usuario.png"
 
-
 const columns = [
   { field: 'id', headerName: 'ID', width: 12 },
   {

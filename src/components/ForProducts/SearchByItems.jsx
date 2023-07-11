@@ -8,14 +8,11 @@ import InputBase from "@material-ui/core/InputBase";
 import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import FilterListIcon from '@material-ui/icons/FilterList';
 import { Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -91,10 +88,6 @@ export default function PrimarySearchAppBar(props) {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
@@ -135,7 +128,10 @@ export default function PrimarySearchAppBar(props) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem onClick={props.handleOpenCart}>
+      <MenuItem onClick={() => {
+        props.handleOpenCart()
+        handleMenuClose()
+      }}>
         <IconButton aria-label="Carrinho" color="inherit">
           <Badge
             color="secondary"
@@ -146,30 +142,23 @@ export default function PrimarySearchAppBar(props) {
         </IconButton>
         <p>Carrinho</p>
       </MenuItem>
-      <MenuItem onClick={props.handleOpenCreate}>
+      <MenuItem onClick={() => {
+        props.handleOpenCreate()
+        handleMenuClose()
+      }}>
         <IconButton color="inherit">
           <AddToPhotosIcon />
         </IconButton>
         <p>Adicionar produtos</p>
       </MenuItem>
-      {/* <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
+      <MenuItem onClick={() => {
+        props.setOpenFiltro(true)
+        handleMenuClose()
+      }}>
+        <IconButton color="inherit">
+          <FilterListIcon />
         </IconButton>
-        <p>Notifications</p>
-      </MenuItem> */}
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
+        <p>Filtros</p>
       </MenuItem>
     </Menu>
   );
@@ -198,6 +187,9 @@ export default function PrimarySearchAppBar(props) {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+            <IconButton color="inherit" onClick={() => props.setOpenFiltro(true)}>
+              <FilterListIcon />
+            </IconButton>
             <IconButton
               aria-label="Carrinho"
               color="inherit"

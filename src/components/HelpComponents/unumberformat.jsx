@@ -48,8 +48,6 @@ export default function FormattedInputs(props) {
     props.setValue(e.target.value)
   }
 
-  console.log("dkkdkd", props.erros)
-
   return (
     <TextField
       label={props.label + (props.null ? (" R$" + props.value) : " ")}

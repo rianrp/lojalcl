@@ -12,7 +12,8 @@ export const Enums = {
         teclado: 10,
         relogio: 11,
         adaptador: 12,
-        outros: 13
+        celular: 13,
+        outros: 14
     },
     cargo: {
         Manager: 1, 

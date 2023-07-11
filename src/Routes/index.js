@@ -1,11 +1,25 @@
-import { useContext, useEffect } from "react";
-import { Route, Navigate, Outlet } from "react-router-dom";
-import AuthApi from "./AuthApi";
+import { Navigate, useNavigate } from "react-router-dom";
+
+import { repositoryUser } from "../Repositories/user";
+import { useEffect } from "react";
 
 export const ProtectRoutes = ({ children }) => {
-  if (!localStorage.getItem("usuario")) {
-    return <Navigate to="/" />;
-  }
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await repositoryUser.isAuthenticated();
+        if (response.data == false) {
+          navigate("/");
+          localStorage.clear();
+        }
+      } catch (e) {
+        navigate("/");
+      }
+    })();
+  }, []);
+
   return <>{children}</>;
 };
 

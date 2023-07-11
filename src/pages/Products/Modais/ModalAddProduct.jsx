@@ -199,7 +199,7 @@ export default function ModalAddProducts(props) {
         maxWidth={"md"}
         aria-labelledby="responsive-dialog-title"
       >
-        <AppBar className={classes.appBar}>
+        <AppBar className={classes.appBar}> 
           <Toolbar className={classes.title}>
             <Typography variant="h6" className={classes.title}>
 

@@ -4,11 +4,8 @@ import { MenuDrawer } from "../../components/ForMenu/Drawer"
 import SnackbarsMessage from "../../components/AllPages/SnackbarMessage";
 import { EmployeesRepository } from "../../Repositories/employees";
 import EnhancedTable from "./table";
-import SearchIcon from '@material-ui/icons/Search';
 import ModalAddEmployees from "./ModalAddEmployees";
 import UserListToolbar from "./SearchComp";
-import AddIcon from '@material-ui/icons/Add';
-import { shopeeProducts } from "../../Repositories/shopeeProducts";
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,15 +13,6 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
     },
     appBarSpacer: theme.mixins.toolbar,
-    content: {
-        flexGrow: 1,
-        height: "100vh",
-        overflow: "auto",
-    },
-    container: {
-        paddingTop: theme.spacing(4),
-        paddingBottom: theme.spacing(4),
-    },
     paper: {
         padding: theme.spacing(2),
         display: "flex",
@@ -33,18 +21,6 @@ const useStyles = makeStyles((theme) => ({
     },
     fixedHeight: {
         height: 240,
-    },
-    backdrop: {
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        zIndex: 9999,
-        color: "#fff", // cor de fundo desejada
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
     }, search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
@@ -67,22 +43,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    inputRoot: {
-        color: 'inherit',
-    },
-    inputInput: {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            width: '12ch',
-            '&:focus': {
-                width: '20ch',
-            },
-        },
     },
 }));
 
@@ -107,7 +67,6 @@ export const Employees = () => {
     const allEmployees = async () => {
         try {
             setLoading(true)
-
             let response = await EmployeesRepository.getAll();
             setEmployees(response.data.data)
 
@@ -185,9 +144,6 @@ export const Employees = () => {
                 <div className={classes.appBarSpacer} />
 
                 <ModalAddEmployees {...{ openModal, setOpenModal, name, setName, email, setEmail, password, setPassword, cargo, setCargo, image, setImage, handleClickCreate, loading }} />
-                {/* <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-                    Funcionários
-                </Typography> */}
                 <Grid item xs={12} container>
                     <Grid xs={12}>
                         <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />

@@ -40,9 +40,7 @@ const useStyles = makeStyles({
 export default function Cards(props) {
   const theme = useTheme();
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const [products, setProducts] = useState(props.ProductsPerPage);
 
   function category(category) {
     switch (category) {
@@ -85,29 +83,16 @@ export default function Cards(props) {
       case Enums.category.outros:
         category = "Outros";
         break;
-  
+
       default:
         break;
     }
-  
     return category;
   }
-  
-
-  useEffect(() => {
-    setProducts(props.ProductsPerPage);
-  }, [props.ProductsPerPage]);
-
-  const productsFiltrados = products?.filter(function (e) {
-    if(props.searchValue == ""){
-      return e.name
-    }
-    return e.name.toLowerCase().includes(props.searchValue.toLowerCase());
-  });
 
   return (
     <>
-      {productsFiltrados?.map((item) => (
+      {props.productsFiltrados?.map((item) => (
         <Grid item xs={fullScreen ? 12 : 3} md={3} key={item.id}>
           <Card className={classes.root} variant="outlined" >
             <CardContent>

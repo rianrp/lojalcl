@@ -40,14 +40,8 @@ const useStyles = makeStyles((theme) => ({
     margin: {
         margin: theme.spacing(1),
     },
-    withoutLabel: {
-        marginTop: theme.spacing(3),
-    },
     textField: {
         width: '25ch',
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2),
     },
     appBar: {
         position: "relative",
@@ -55,12 +49,6 @@ const useStyles = makeStyles((theme) => ({
     title: {
         marginLeft: theme.spacing(2),
         flex: 1,
-    },
-    toolbar: {
-        minHeight: 128,
-        alignItems: "flex-start",
-        paddingTop: theme.spacing(1),
-        paddingBottom: theme.spacing(2),
     },
 }));
 

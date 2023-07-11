@@ -18,6 +18,7 @@ import { SellingRepository } from "../../Repositories/selling";
 import { MenuDrawer } from "../../components/ForMenu/Drawer";
 import Pagination from "@material-ui/lab/Pagination";
 import ModalSellProducts from "./Modais/ModalSellProduct";
+import ModalFiltroProduct from "./Modais/ModalFiltros";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -84,6 +85,8 @@ export default function Products() {
   const [descont, setDescont] = useState()
   const [description, setDescription] = useState("");
   const [payment, setPayment] = useState(1);
+  const [openFiltro, setOpenFiltro] = useState(false);
+  const [filtroSelected, setFiltroSelected] = useState(0);
   let date = new Date();
   const [data, setDate] = useState(date);
   const [page, setPage] = useState(1);
@@ -94,10 +97,27 @@ export default function Products() {
     tax: 0,
     total: 0
   })
-  const pages = Math.ceil(allProducts.length / itensperpage);
   const s = (page - 1) * itensperpage;
   const i = s + itensperpage;
-  const ProductsPerPage = allProducts.slice(s, i);
+
+  const Filtrados = allProducts?.filter(function (e) {
+    if (searchValue && (filtroSelected !== 0 && filtroSelected !== null)) {
+      return (
+        e.name.toLowerCase().includes(searchValue.toLowerCase()) &&
+        e.category === filtroSelected
+      );
+    } else if (searchValue) {
+      return e.name.toLowerCase().includes(searchValue.toLowerCase());
+    } else if (filtroSelected !== 0 && filtroSelected !== null) {
+      return e.category === filtroSelected;
+    } else {
+      return e;
+    }
+  });
+
+  const productsFiltrados = Filtrados.slice(s, i)
+  
+  const pages = Math.ceil(Filtrados.length / itensperpage);
 
   const handleOpenCreate = async () => {
     setOpenModal(true);
@@ -270,12 +290,6 @@ export default function Products() {
   };
 
   const handleClickSaveBuy = async () => {
-    if (description == null || description == "") {
-      setMessage("Adicione uma descrição");
-      setSeverity("warning");
-      setSnackbarOpen(true);
-      return;
-    }
     try {
       setLoading(true);
 
@@ -327,7 +341,7 @@ export default function Products() {
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
-    scrollToTop();
+    window.scrollTo(0, 0);
   };
 
   const scrollToTop = () => {
@@ -429,6 +443,7 @@ export default function Products() {
         <ModalSellProducts
           {...{ cartItem, setCartItems, openCart, setOpenCart, handleClickSaveBuy, descont, setDescont, description, setDescription, payment, setPayment, values, setValues }}
         />
+        <ModalFiltroProduct {...{ openFiltro, setOpenFiltro, filtroSelected, setFiltroSelected }} />
         <PrimarySearchAppBar
           {...{
             openModal,
@@ -436,23 +451,25 @@ export default function Products() {
             searchValue,
             setSearchValue,
             handleOpenCart,
-            cartItem
+            cartItem,
+            setOpenFiltro,
+            filtroSelected,
+            setFiltroSelected
           }}
         />
         <Grid container item xs={12} justify="left" alignItems="center">
           {allProducts ? (
             <Cards
               {...{
-                ProductsPerPage,
                 handleOpenDelete,
                 handleOpenEdit,
                 handleBuyProduct,
-                searchValue
+                searchValue,
+                productsFiltrados
               }}
             />
           ) : null}
         </Grid>
-
         <Grid
           style={{
             textAlign: "center",

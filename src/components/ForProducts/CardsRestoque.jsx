@@ -10,6 +10,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import { CardMedia, Grid, IconButton, useMediaQuery } from "@material-ui/core";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { useTheme } from "@material-ui/core/styles";
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import { Enums } from "../../enums";
 
 const useStyles = makeStyles({
@@ -37,7 +38,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function Cards(props) {
+export default function CardsRestoque(props) {
   const theme = useTheme();
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
@@ -82,32 +83,35 @@ export default function Cards(props) {
       case Enums.category.adaptador:
         category = "Adaptador";
         break;
+      case Enums.category.celular:
+        category = "Celular";
+        break;
       case Enums.category.outros:
         category = "Outros";
         break;
-  
+
       default:
         break;
     }
-  
+
     return category;
   }
-  
+
 
   useEffect(() => {
     setProducts(props.ProductsPerPage);
   }, [props.ProductsPerPage]);
 
-  const productsFiltrados = products?.filter(function (e) {
-    if(props.searchValue == ""){
-      return e.name
-    }
-    return e.name.toLowerCase().includes(props.searchValue.toLowerCase());
-  });
+  // const productsFiltrados = products?.filter(function (e) {
+  //   if(props.searchValue == ""){
+  //     return e.name
+  //   }
+  //   return e.name.toLowerCase().includes(props.searchValue.toLowerCase());
+  // });
 
   return (
     <>
-      {productsFiltrados?.map((item) => (
+      {products?.map((item) => (
         <Grid item xs={fullScreen ? 12 : 3} md={3} key={item.id}>
           <Card className={classes.root} variant="outlined" >
             <CardContent>
@@ -136,53 +140,24 @@ export default function Cards(props) {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                onClick={() =>
-                  props.handleOpenEdit(
-                    item.id,
-                    item.name,
-                    item.category,
-                    item.image,
-                    item.price,
-                    item.quantity,
-                    item.warranty,
-                    item.margin,
-                    item.description
-                  )
-                }
-              >
-                <EditIcon />
-              </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                className={classes.button}
-                onClick={() => props.handleOpenDelete(item.id)}
-                style={{ backgroundColor: "#C50101" }}
-              >
-                <DeleteIcon />
-              </Button>
               <IconButton
                 className={classes.expand}
                 color="primary"
                 aria-label="add to shopping cart"
                 style={{ marginLeft: "auto" }}
-                onClick={() =>
-                  props.handleBuyProduct(
-                    item.id,
-                    item.name,
-                    item.quantity,
-                    item.price,
-                    item.image,
-                    item.warranty,
-                    item.description
-                  )
-                }
+                onClick={() => props.handleSelectedRestoque(
+                  item.id,
+                  item.name,
+                  item.category,
+                  item.image,
+                  item.price,
+                  item.quantity,
+                  item.warranty,
+                  item.margin,
+                  item.description
+                )}
               >
-                <AddShoppingCartIcon />
+                <ShoppingBasketIcon />
               </IconButton>
             </CardActions>
           </Card>

@@ -255,7 +255,7 @@ export default function ModalSellProducts(props) {
                 <Grid item xs={12} style={{ marginTop: "20px" }}>
                   <TextField
                     id="outlined-basic"
-                    label="Desconto"
+                    label="Desconto R$"
                     value={props.descont}
                     onChange={(e) => props.setDescont(e.target.value)}
                     variant="outlined"
@@ -265,7 +265,7 @@ export default function ModalSellProducts(props) {
                 <Grid item xs={12} style={{ marginTop: "20px" }}>
                   <TextField
                     id="outlined-basic"
-                    label="Taxa %"
+                    label="Taxa R$"
                     value={tax}
                     onChange={(e) => setTax(e.target.value)}
                     variant="outlined"

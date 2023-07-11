@@ -1,14 +1,11 @@
 import React, { useContext, useState } from "react";
 import logo from "../../images/logoteste2.jpeg";
-import api from "../../Api";
 import { repositoryUser } from "../../Repositories/user";
 import { Backdrop, Box, Button, Checkbox, CircularProgress, Container, CssBaseline, FormControlLabel, Grid, TextField, Typography, useMediaQuery } from "@material-ui/core";
 import AuthApi from "../../Routes/AuthApi";
-import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { useNavigate } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
 import SnackbarsMessage from "../../components/AllPages/SnackbarMessage";
-import Avatar from '@material-ui/core/Avatar';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 function Copyright() {
   return (
@@ -51,24 +48,9 @@ export const Login = (props) => {
   const [loading, setLoading] = useState(false);
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [hasAccount, setHasaccount] = useState(false);
   const [message, setMessage] = useState("");
   const [SnackbarOpen, setSnackbarOpen] = useState();
   const [severity, setSeverity] = useState();
-  const [name, setName] = useState("");
-  const theme = useTheme();
-  const navigate = useNavigate()
-  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
-
-  const redirectUserToDashboard = () => {
-    const usuario = JSON.parse(localStorage.getItem('usuario'));
-    if (usuario) {
-      navigate('/Dashboard');
-    }
-  };
-
 
   const login = async () => {
     let userAdmin = {

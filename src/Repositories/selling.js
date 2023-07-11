@@ -1,7 +1,6 @@
 import api from "../Api"
 
 const user = JSON.parse(localStorage.getItem("usuario"));
-console.log()
 
 export const SellingRepository = {
     getAll: async () => {
@@ -31,8 +30,8 @@ export const SellingRepository = {
         
         return response;
     },
-    getDetails: async () => {
-        let response = await api.get('/Vendas/detalhes', {
+    getDetails: async (dto) => {
+        let response = await api.post('/Vendas/detalhes',dto, {
             headers: {
                 Authorization: "Bearer " + user.token
             }
